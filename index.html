@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Sphere - P2</title>
+    <style>
+:root {
+  --primary-color: #3a7ca5;
+  --secondary-color: #81c3d7;
+  --text-color: #2c3e50;
+  --background-color: #f0f4f8;
+  --white: #ffffff;
+  --accent-color: rgb(6, 51, 70);
+  --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.6;
+  color: var(--text-color);
+  background-color: var(--background-color);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+header {
+  background-color: var(--primary-color);
+  color: var(--white);
+  text-align: center;
+  padding: 2em;
+  margin-bottom: 30px;
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+}
+
+header h1 {
+  font-size: 2.5em;
+  margin-bottom: 0.5em;
+}
+
+nav {
+  background-color: var(--secondary-color);
+  padding: 15px;
+  margin-bottom: 30px;
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+}
+
+nav a {
+  color: var(--text-color);
+  text-decoration: none;
+  padding: 10px 15px;
+  margin: 0 5px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+nav a:hover {
+  background-color: var(--primary-color);
+  color: var(--white);
+}
+
+.content {
+  background-color: var(--white);
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+}
+
+h2 {
+  color: var(--primary-color);
+  border-bottom: 2px solid var(--secondary-color);
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  font-size: 1.8em;
+}
+
+h3 {
+  color: var(--accent-color);
+  margin-bottom: 15px;
+  font-size: 1.4em;
+}
+
+ul {
+  list-style-type: disc;
+  padding-left: 20px;
+}
+
+li {
+  margin-bottom: 10px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.class-diagram {
+  background-color: #e6eef4;
+  border: 1px solid #c0d6e4;
+  border-radius: 5px;
+  padding: 20px;
+  margin: 20px 0;
+  font-family: 'Courier New', monospace;
+  white-space: pre-wrap;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  box-shadow: var(--shadow);
+}
+
+th, td {
+  border: 1px solid #c0d6e4;
+  padding: 15px;
+  text-align: left;
+}
+
+th {
+  background-color: var(--primary-color);
+  color: var(--white);
+}
+
+tr:nth-child(even) {
+  background-color: #e6eef4;
+}
+
+@media (max-width: 768px) {
+  body {
+    padding: 10px;
+  }
+  
+  nav {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  nav a {
+    margin: 5px 0;
+  }
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+p {
+  margin-bottom: 15px;
+}
+
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: var(--accent-color);
+}
+
+.highlight {
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+  padding: 2px 5px;
+  border-radius: 3px;
+}
+
+/* Initially hide all sections */
+.content section {
+            display: none;
+        }
+
+        /* Display the active section */
+        .content section.active {
+            display: block;
+        }
+    </style>
+
+<script>
+    // JavaScript function to toggle sections
+    function showPage(pageId) {
+        // Hide all sections
+        const sections = document.querySelectorAll('.content section');
+        sections.forEach(section => {
+            section.classList.remove('active');
+        });
+
+        // Show the selected section by adding 'active' class
+        const activeSection = document.getElementById(pageId);
+        if (activeSection) {
+            activeSection.classList.add('active');
+        }
+    }
+
+    // Show the "home" section by default on page load
+    window.addEventListener('load', () => {
+        showPage('home');
+    });
+</script>
+    
+</head>
+<body>
+
+<header>
+    <h1>Event Sphere</h1>
+    <p><h4><center>CS5744 - Project 2</center></h4><p>
+</header>
+
+<!-- Navigation Bar -->
+<nav>
+    <a href="javascript:void(0)" onclick="showPage('home')"><b>Home</b></a>
+    <a href="javascript:void(0)" onclick="showPage('Test Scope')"><b>Test Scope</b></a>
+    <a href="javascript:void(0)" onclick="showPage('Test Plan')"><b>Test Plan</b></a>
+    <a href="javascript:void(0)" onclick="showPage('test-procedure')"><b>Test Procedure</b></a>
+    <a href="javascript:void(0)" onclick="showPage('Validations')"><b>Validations</b></a>
+    <a href="javascript:void(0)" onclick="showPage('conclusion')"><b>Conclusion</b></a>
+</nav>
+
+
+<!-- Content Section -->
+<div class="content">
+    <!-- Home Page Content -->
+    <section id="home" class="active">
+        <h2 class="section-title">Project Overview</h2>
+        <p><strong>Description:</strong> EventSphere is an online platform for managing events and ticketing that supports organizers in creating events, tracking ticket sales in real time, and offering items like merchandise and concessions. For attendees, EventSphere provides a seamless experience, from purchasing tickets to checking in with QR codes and collecting pre-ordered items at events. Vendors benefit from real-time access to attendee orders and inventory levels, enabling quick and accurate order fulfillment.</p>
+    
+        <p>EventSphere is built on a flexible microservices architecture, allowing each core function—such as event management, ticketing, order processing, vendor management, and analytics—to scale independently and update in real time. This architecture helps EventSphere handle large volumes of traffic, support distinct user roles with tailored access, and maintain high performance even during peak times. By using this modular and scalable design, EventSphere offers a robust, adaptable solution that provides a cohesive and responsive experience for all users.</p>
+        <h3>Team Members:</h3>
+        <ul>
+            <li>Sahil Sharma - <i>sahilsharma@vt.edu</i></li>
+            <li>Shail Shah - <i>shails@vt.edu</i></li>
+            <li>Ritwik Sood - <i>ritwiksood@vt.edu</i></li>
+            <li>Uma Sruthy Gajula - <i>gumasruthy@vt.edu</i></li>
+            <li>Udbhaav Mudgil - <i>umudgil@vt.edu</i></li>
+        </ul>
+    </section>
+    <!-- Test Scope Content -->
+    <section id="Test Scope">
+      <h2 class="section-title">Test Scope</h2>
+    
+      <h3>Overview</h3>
+    <p>
+        The Test Scope defines the boundaries of the testing process for the EventSphere application, focusing on critical components, functionalities, and system behavior to ensure the application is reliable, secure, scalable, and user-friendly. This scope encompasses both functional and non-functional requirements, addressing individual components and their integration into end-to-end workflows.
+    </p>
+    
+    <h3>Test Items</h3>
+    <p>The testing scope includes the following key components and features of the EventSphere application:</p>
+    <ul>
+        <li><strong>Database Layer:</strong> Validates schema integrity, CRUD operations, query optimization, and security mechanisms.</li>
+        <li><strong>Backend Layer:</strong> Focuses on API functionality, authentication/authorization, and integration with the database.</li>
+        <li><strong>Presentation Layer:</strong> Ensures user interface usability, cross-device compatibility, and accessibility compliance.</li>
+        <li><strong>Integration Testing:</strong> Verifies seamless interaction between database, backend, and frontend layers.</li>
+        <li><strong>End-to-End Testing:</strong> Confirms complete workflows for organizers, attendees, and vendors.</li>
+    </ul>
+    
+    <h3>Functional Requirements</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>REQ#</th>
+                <th>Requirement Description</th>
+                <th>In Scope?</th>
+                <th>Testing Goal/Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>FR-1</td>
+                <td>End-to-end ticket lifecycle management from creation to check-in</td>
+                <td>Yes</td>
+                <td>Validate complete ticketing workflow including updates and cancellations</td>
+            </tr>
+            <tr>
+                <td>FR-2</td>
+                <td>Dynamic QR code generation with embedded ticket and order data</td>
+                <td>Yes</td>
+                <td>Test QR code data integrity and update synchronization</td>
+            </tr>
+            <tr>
+                <td>FR-3</td>
+                <td>Real-time inventory tracking across multiple vendor points</td>
+                <td>Yes</td>
+                <td>Verify stock level accuracy and concurrent update handling</td>
+            </tr>
+            <tr>
+                <td>FR-4</td>
+                <td>Multi-vendor order processing and fulfillment system</td>
+                <td>Yes</td>
+                <td>Test order routing and status tracking across vendors</td>
+            </tr>
+            <tr>
+                <td>FR-5</td>
+                <td>Event analytics with real-time metrics visualization</td>
+                <td>Yes</td>
+                <td>Validate data aggregation and dashboard updates</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h3>Non-Functional Requirements</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>REQ#</th>
+                <th>Requirement Description</th>
+                <th>In Scope?</th>
+                <th>Testing Goal/Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>NFR-1</td>
+                <td>Sub-second QR code validation response time</td>
+                <td>Yes</td>
+                <td>Benchmark scanning and validation performance</td>
+            </tr>
+            <tr>
+                <td>NFR-2</td>
+                <td>Real-time inventory sync under 500ms latency</td>
+                <td>Yes</td>
+                <td>Measure update propagation across the system</td>
+            </tr>
+            <tr>
+                <td>NFR-3</td>
+                <td>Support for 100+ concurrent vendor connections</td>
+                <td>Yes</td>
+                <td>Test multi-vendor concurrent operations</td>
+            </tr>
+            <tr>
+                <td>NFR-4</td>
+                <td>Analytics dashboard refresh rate < 3 seconds</td>
+                <td>Yes</td>
+                <td>Verify visualization update performance</td>
+            </tr>
+            <tr>
+                <td>NFR-5</td>
+                <td>Zero ticket double-booking incidents</td>
+                <td>Yes</td>
+                <td>Test concurrent booking conflict resolution</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h3>Inclusions</h3>
+    <ul>
+        <li>All workflows related to event creation, ticketing, and QR code generation.</li>
+        <li>Core backend functionalities like API responses, error handling, and role-based access.</li>
+        <li>Database performance, query optimization, and backup/recovery mechanisms.</li>
+        <li>UI/UX validation for user accessibility, responsiveness, and compatibility.</li>
+        <li>Security measures, including HTTPS enforcement and data encryption.</li>
+        <li>End-to-end scenarios for organizers, attendees, and vendors.</li>
+    </ul>
+    
+    <h3>Exclusions</h3>
+    <ul>
+        <li>Full testing of third-party integrations (e.g., payment gateway) beyond simulated environments.</li>
+        <li>Non-functional aspects like energy consumption or optimization for legacy devices.</li>
+        <li>Future enhancements or features outside the current project phase.</li>
+    </ul>
+    
+    <h3>Exit Criteria</h3>
+    <p>Testing will be considered complete when the following conditions are met:</p>
+    <ul>
+        <li>Successful end-to-end validation of the ticket lifecycle.</li>
+        <li>Verified real-time inventory synchronization and vendor operations.</li>
+        <li>Confirmed integration of QR code functionality across workflows.</li>
+        <li>Validated analytics accuracy for real-time dashboards.</li>
+        <li>No critical or high-priority defects remaining.</li>
+    </ul>
+    </section>
+    <!-- Test Plan Page Content -->
+    <section id="Test Plan">
+      <h2 class="section-title">Test Plan</h2>
+      <p>
+        The EventSphere application is structured in a three-layered architecture, comprising the Database, Backend, and Presentation layers. Each layer plays a critical role in the overall functionality of the system, and comprehensive testing is essential to ensure smooth integration and performance across all components. The testing strategy is organized into phases, focusing first on the lower layers, such as the Database and Backend, before moving on to the Presentation layer. This phased approach ensures that any issues in the core components are identified and addressed early, minimizing the impact on higher layers and ensuring overall system reliability.
+
+The first phase of testing will focus on the Database layer. This phase will involve verifying the integrity, security, and performance of the database schema, tables, and relationships. Key activities include validating CRUD (Create, Read, Update, Delete) operations, ensuring that data retrieval and storage processes work correctly under varying loads, and testing database backups and recovery procedures. </p> 
+
+<p>The goal is to ensure that the database can handle the expected volume of events and that data consistency is maintained across the application. Additionally, performance testing will be conducted to measure query optimization and response times to ensure that the database can scale effectively.
+
+After the successful validation of the Database layer, testing will progress to the Backend layer, which involves the core business logic and API services of the application. This phase will focus on testing the application's server-side functionality, including the integration of APIs, authentication and authorization mechanisms, and the interaction with the database. Unit tests, integration tests, and load testing will be performed to assess the performance and reliability of the backend services under various usage scenarios. Finally, once the Backend layer is fully validated, testing will proceed to the Presentation layer, which will involve validating the user interface and user experience of the application across different devices and browsers to ensure accessibility, responsiveness, and ease of use for end-users.
+      </p>
+    
+      <h3>Objectives:</h3>
+      <ul>
+        <li>Validate database integrity, schema, and performance under load.</li>
+        <li>Ensure backend functionality, API security, and performance.</li>
+        <li>Test presentation layer for consistent user experience and accessibility.</li>
+        <li>Ensure all security protocols are followed and vulnerabilities are addressed.</li>
+      </ul>
+    
+      <h3>Scope:</h3>
+      <p>
+        The testing will cover the following components:
+      </p>
+      <ul>
+        <li><strong>Database:</strong> Schema validation, data integrity, and load testing.</li>
+        <li><strong>Backend:</strong> API functionality, security, and load handling.</li>
+        <li><strong>Presentation:</strong> UI/UX, accessibility, and visual consistency.</li>
+      </ul>
+      <h3>Integration Overview</h3>
+    <p>The EventSphere application is structured in a three-layered architecture, comprising the Database, Backend, and Presentation layers. Each layer plays a critical role in the overall functionality of the system, and comprehensive testing is essential to ensure smooth integration and performance across all components.</p>
+    <p>The testing strategy is organized into phases, focusing first on the lower layers, such as the Database and Backend, before moving on to the Presentation layer. This phased approach ensures that any issues in the core components are identified and addressed early, minimizing the impact on higher layers and ensuring overall system reliability.</p>
+
+    <h3>Integration Phases</h3>
+
+    <h4>Phase 1: Database and Core API Integration</h4>
+    <ul>
+        <li><strong>System Portions:</strong> Database schema, tables, relationships, and basic backend APIs for CRUD operations.</li>
+        <li><strong>Objective:</strong> Verify the database's ability to handle CRUD operations under load and ensure APIs correctly interact with the database.</li>
+        <li><strong>Tests:</strong>
+            <ul>
+                <li>Schema validation.</li>
+                <li>CRUD operations.</li>
+                <li>Query optimization.</li>
+            </ul>
+        </li>
+        <li><strong>Rationale:</strong> Ensures the system foundation is solid before proceeding to business logic.</li>
+    </ul>
+
+    <h4>Phase 2: Backend Business Logic</h4>
+    <ul>
+        <li><strong>System Portions:</strong> Backend authentication/authorization, ticketing, and vendor management logic.</li>
+        <li><strong>Objective:</strong> Validate backend logic and its integration with the database.</li>
+        <li><strong>Tests:</strong>
+            <ul>
+                <li>Role validation.</li>
+                <li>Edge case handling.</li>
+                <li>Backend error recovery.</li>
+            </ul>
+        </li>
+        <li><strong>Rationale:</strong> Backend robustness is critical for frontend and vendor functionality.</li>
+    </ul>
+
+    <h4>Phase 3: Frontend-Backend Integration</h4>
+    <ul>
+        <li><strong>System Portions:</strong> Backend APIs and frontend UI components.</li>
+        <li><strong>Objective:</strong> Test real-time UI data rendering and API integration for user workflows.</li>
+        <li><strong>Tests:</strong>
+            <ul>
+                <li>UI responsiveness.</li>
+                <li>Dynamic data updates.</li>
+                <li>Usability testing.</li>
+            </ul>
+        </li>
+        <li><strong>Rationale:</strong> Ensures frontend displays accurate data and integrates with the backend effectively.</li>
+    </ul>
+
+    <h4>Phase 4: Vendor and Analytics Modules</h4>
+    <ul>
+        <li><strong>System Portions:</strong> Vendor inventory management, order fulfillment, and analytics dashboards.</li>
+        <li><strong>Objective:</strong> Validate vendor functionality and analytics accuracy.</li>
+        <li><strong>Tests:</strong>
+            <ul>
+                <li>Real-time inventory tracking.</li>
+                <li>Analytics data aggregation.</li>
+                <li>Stress testing.</li>
+            </ul>
+        </li>
+        <li><strong>Rationale:</strong> These modules depend on a fully functional backend and database.</li>
+    </ul>
+
+    <h4>Phase 5: Full System Integration</h4>
+    <ul>
+        <li><strong>System Portions:</strong> All components: Database, Backend, Frontend, Vendor, and Analytics.</li>
+        <li><strong>Objective:</strong> End-to-end validation of real-world workflows.</li>
+        <li><strong>Tests:</strong>
+            <ul>
+                <li>Comprehensive workflows for organizers, attendees, and vendors.</li>
+                <li>Load testing for peak traffic scenarios.</li>
+                <li>Security and accessibility compliance (e.g., WCAG standards).</li>
+            </ul>
+        </li>
+        <li><strong>Rationale:</strong> Ensures seamless integration of all components.</li>
+    </ul>
+
+    <h3>Why This Approach is Optimal</h3>
+    <ul>
+        <li><strong>Isolates Issues Early:</strong> Testing foundational layers first reduces downstream errors.</li>
+        <li><strong>Minimizes Risk:</strong> Incremental builds allow stability before more complex modules are added.</li>
+        <li><strong>Aligns with Architecture:</strong> The phased approach complements EventSphere's microservices architecture, enabling independent testing of components.</li>
+        <li><strong>Simulates Real Scenarios:</strong> Final integration mirrors real-world conditions, ensuring the system performs under actual usage patterns.</li>
+    </ul>
+    
+      <h3>Test Cases:</h3>
+      <h4>Database Phase</h4>
+      <p>The Database Phase focuses on validating the core data storage and management functionalities of the EventSphere application. This phase includes testing the integrity of database schemas, ensuring that tables, fields, and relationships between entities are correctly implemented. The main objective is to verify that the database can handle CRUD operations efficiently, ensuring data is accurately created, retrieved, updated, and deleted as per the application's requirements. In addition to functionality testing, performance testing will be conducted to evaluate the database's ability to handle heavy loads and concurrent transactions. Security testing will also be a critical component, focusing on protecting sensitive user data through encryption and safeguarding against potential SQL injection or unauthorized access. This phase ensures that the foundation of the system is solid and can support the expected traffic and volume of transactions.</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Test Case #</th>
+            <th>Test Case Description</th>
+            <th>Expected Results</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>FTC-1</td>
+            <td>Schema Testing</td>
+            <td>Ensure database schema matches the Entity Relationship Diagram (ERD) and data model definitions.</td>
+          </tr>
+          <tr>
+            <td>FTC-2</td>
+            <td>Stored Procedure Testing</td>
+            <td>Output values from stored procedures should match the expected results.</td>
+          </tr>
+          <tr>
+            <td>FTC-3</td>
+            <td>Database Definition Testing</td>
+            <td>Verify that tables, keys, and constraints are correctly defined according to specifications.</td>
+          </tr>
+          <tr>
+            <td>FTC-4</td>
+            <td>Security Testing</td>
+            <td>Access roles and permissions must comply with security requirements.</td>
+          </tr>
+          <tr>
+            <td>FTC-5</td>
+            <td>Load Testing</td>
+            <td>Database should handle user load without failed transactions, maintaining performance SLAs.</td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+      <h4>Backend Phase</h4>
+      <p>The Backend Phase of testing will ensure the application’s server-side logic functions correctly and integrates seamlessly with the database. This phase focuses on validating the API endpoints, ensuring they return the correct responses to various requests and handle data appropriately. Functional testing will verify that all business logic is correctly implemented and that interactions between the backend services and the database are flawless. Load testing will simulate real-world usage scenarios to assess how the backend handles multiple simultaneous requests without performance degradation. Additionally, security testing will be performed to verify the protection of user data, including authentication and authorization mechanisms. This phase also includes stress testing to determine how the backend performs under extreme conditions, such as high traffic, and recovery testing to ensure the system can handle failures and return to normal operation without data loss or downtime.</p>
+      <h4>Functional Testing</h4>
+      <table>
+        <thead>
+          <tr>
+            <th>Test Case #</th>
+            <th>Test Case Description</th>
+            <th>Expected Results</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>FTC-6</td>
+            <td>Positive Testing</td>
+            <td>APIs should return correct results for valid inputs.</td>
+          </tr>
+          <tr>
+            <td>FTC-7</td>
+            <td>Edge Case Testing</td>
+            <td>APIs should handle edge cases gracefully, producing expected results.</td>
+          </tr>
+          <tr>
+            <td>FTC-8</td>
+            <td>Negative Testing - Valid Input</td>
+            <td>Operations should fail gracefully for unexpected but valid input.</td>
+          </tr>
+          <tr>
+            <td>FTC-9</td>
+            <td>Negative Testing - Invalid Input</td>
+            <td>APIs should reject invalid input with appropriate error messages.</td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+      
+      <h4>Security Testing</h4>
+      <table>
+        <thead>
+          <tr>
+            <th>Test Case #</th>
+            <th>Test Case Description</th>
+            <th>Expected Results</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>FTC-10</td>
+            <td>Security Principles</td>
+            <td>API should adhere to security best practices, rejecting unauthorized access.</td>
+          </tr>
+          <tr>
+            <td>FTC-11</td>
+            <td>Role Permissions</td>
+            <td>APIs should enforce role-based access control policies.</td>
+          </tr>
+          <tr>
+            <td>FTC-12</td>
+            <td>Access Control Policies</td>
+            <td>Rate limiting and throttles should be implemented as specified.</td>
+          </tr>
+          <tr>
+            <td>FTC-13</td>
+            <td>Protocol</td>
+            <td>All communication should use secure protocols like HTTPS and TLS 1.2.</td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+      
+      <h4>Presentation Phase</h4>
+      <p>The Presentation Phase will focus on ensuring the front-end components of the EventSphere application meet the user experience and performance expectations. This phase involves validating the functionality of the user interface (UI) elements, such as forms, buttons, and navigation features, ensuring they perform as intended. Usability testing will be performed to confirm that the application is intuitive and easy to use for a broad range of users. Performance testing will be a key aspect of this phase, assessing how quickly pages load and how responsive the application is under varying levels of user traffic. Additionally, cross-browser testing will ensure that the application functions correctly on different browsers and devices, providing a consistent user experience. Finally, accessibility testing will confirm that the application meets standards such as WCAG to ensure it is usable by individuals with disabilities, offering an inclusive experience for all users.</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Test Case #</th>
+            <th>Test Case Description</th>
+            <th>Expected Results</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>FTC-14</td>
+            <td>Mandatory Fields</td>
+            <td>All required fields should be clearly marked and validated.</td>
+          </tr>
+          <tr>
+            <td>FTC-15</td>
+            <td>Data Validation</td>
+            <td>Proper error messages should be displayed for invalid inputs.</td>
+          </tr>
+          <tr>
+            <td>FTC-16</td>
+            <td>Theme Consistency</td>
+            <td>The visual design should remain consistent across screens.</td>
+          </tr>
+          <tr>
+            <td>FTC-17</td>
+            <td>Loading Animation</td>
+            <td>Loading animations should be present for all long-running operations.</td>
+          </tr>
+          <tr>
+            <td>FTC-18</td>
+            <td>Help & Guide</td>
+            <td>Resources and guides should be available to assist users.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    
+
+    <section id = "background">
+    <h2>Background</h2>
+    <p>The Health and Fitness Tracking Application is a mobile system designed to assist users in tracking their fitness goals, workout routines, and nutritional intake, while fostering a community-driven platform to keep users motivated and engaged. With the rising demand for personalized fitness solutions, this system aims to offer users a centralized platform where they can log activities, monitor their progress through analytics, and share their journey with others.</p>
+
+    <p>The idea for this project originated from the team’s collective experiences with fitness tracking apps. While many such apps already exist in the market, our team wanted to address gaps in personalized progress tracking and community engagement. By leveraging our understanding of existing systems and new design challenges, we set out to build a comprehensive system focusing on scalability, security, and usability.</p>
+
+    <p>The system includes user authentication and profile creation, where each user can set personalized fitness goals—whether it's weight loss, muscle gain, or general wellness. Users can log workouts, specify exercises, durations, intensity levels, and input nutritional data such as calories and macronutrients. Progress tracking is visualized through detailed dashboards, offering insights based on activity and diet over time. Community features further encourage users to post achievements, interact with others, and participate in discussions.</p>
+
+    <p>Although the system is currently in the conceptual phase, it allows us to explore high-level design decisions, such as modularity and secure data handling, while experimenting with real-time feedback for fitness data. We aim to create a robust system architecture that supports future enhancements, from fitness APIs to advanced analytics.</p>
+    <img src="Header.png" alt="System Architecture" width="700" height="400" style="display: block; margin: auto;">
+</section>
+    <!-- test procedures -->
+    <section id="test-procedure">
+        <h2 class="section-title">Test Procedure for Each Build Phase</h2>
+        
+        <!-- Phase 1 -->
+        <h3>Phase 1: Event Creation and Basic Ticketing</h3>
+        <p><strong>Purpose:</strong> This phase ensures organizers can set up events, attendees can purchase tickets, and unique QR codes are generated. This tests basic event setup, purchase process, and QR code functionality.</p>
+        <ul>
+            <li><strong>Event Setup:</strong>
+                <ul>
+                    <li>Action: Enter event details (date, location, ticket type).</li>
+                    <li>Expected Outcome: Event details are saved and listed accurately.</li>
+                </ul>
+            </li>
+            <li><strong>Basic Ticket Purchase:</strong>
+                <ul>
+                    <li>Action: Simulate ticket selection and payment process.</li>
+                    <li>Expected Outcome: Ticket purchase confirmed, transaction stored.</li>
+                </ul>
+            </li>
+            <li><strong>QR Code Generation for Ticket:</strong>
+                <ul>
+                    <li>Action: Complete ticket purchase, triggering QR code generation.</li>
+                    <li>Expected Outcome: QR code links correctly to attendee’s ticket.</li>
+                </ul>
+            </li>
+        </ul>
+        <p><strong>Overhead Software:</strong> Payment gateway simulation, database stubs for event data storage.</p>
+    
+        <!-- Phase 2 -->
+        <h3>Phase 2: Advanced Ticketing and Seat Selection</h3>
+        <p><strong>Purpose:</strong> This phase adds seat selection and ticket cancellation, ensuring attendees can choose specific seats, view seat availability, and cancel tickets if needed.</p>
+        <ul>
+            <li><strong>Seat Selection:</strong>
+                <ul>
+                    <li>Action: Select seat, confirm availability, and reserve.</li>
+                    <li>Expected Outcome: Selected seat is marked unavailable.</li>
+                </ul>
+            </li>
+            <li><strong>Ticket Cancellation:</strong>
+                <ul>
+                    <li>Action: Cancel ticket and verify seat release.</li>
+                    <li>Expected Outcome: Ticket is canceled, seat becomes available for others.</li>
+                </ul>
+            </li>
+        </ul>
+        <p><strong>Overhead Software:</strong> Seat selection simulation, ticket cancellation stubs.</p>
+    
+        <!-- Phase 3 -->
+        <h3>Phase 3: Merchandise and Concession Pre-ordering</h3>
+        <p><strong>Purpose:</strong> This phase tests the pre-ordering functionality for merchandise and concessions, confirming orders link to attendee QR codes and allowing order modifications.</p>
+        <ul>
+            <li><strong>Item Pre-order:</strong>
+                <ul>
+                    <li>Action: Place pre-order for items linked to QR code.</li>
+                    <li>Expected Outcome: Order is saved and appears on attendee’s profile.</li>
+                </ul>
+            </li>
+            <li><strong>Order Modification:</strong>
+                <ul>
+                    <li>Action: Modify an existing order, verifying updates to QR code.</li>
+                    <li>Expected Outcome: QR code reflects updated order details.</li>
+                </ul>
+            </li>
+        </ul>
+        <p><strong>Overhead Software:</strong> Inventory driver for item availability, QR code update stubs.</p>
+    
+        <!-- Phase 4 -->
+        <h3>Phase 4: Vendor Access and QR Code Order Fulfillment</h3>
+        <p><strong>Purpose:</strong> This phase verifies that vendors can access orders through QR scanning and manage inventory in real time for efficient fulfillment.</p>
+        <ul>
+            <li><strong>QR Code Scanning for Order Retrieval:</strong>
+                <ul>
+                    <li>Action: Vendor scans QR code to retrieve attendee’s pre-order details.</li>
+                    <li>Expected Outcome: Accurate order details displayed.</li>
+                </ul>
+            </li>
+            <li><strong>Inventory Updates Post Fulfillment:</strong>
+                <ul>
+                    <li>Action: Complete order and verify inventory updates in real time.</li>
+                    <li>Expected Outcome: Inventory accurately reflects stock levels post-fulfillment.</li>
+                </ul>
+            </li>
+        </ul>
+        <p><strong>Overhead Software:</strong> QR code scanning driver, inventory update stubs.</p>
+    
+        <!-- Phase 5 -->
+        <h3>Phase 5: Real-time Analytics and Event Monitoring</h3>
+        <p><strong>Purpose:</strong> This phase ensures that real-time analytics display accurate updates for ticket sales, check-ins, and inventory, supporting live event monitoring for organizers.</p>
+        <ul>
+            <li><strong>Live Sales Dashboard:</strong>
+                <ul>
+                    <li>Action: Simulate ticket sales and check-ins, view analytics dashboard.</li>
+                    <li>Expected Outcome: Dashboard reflects real-time updates with minimal delay.</li>
+                </ul>
+            </li>
+            <li><strong>Inventory Tracking During Event:</strong>
+                <ul>
+                    <li>Action: Order items and check dashboard updates for inventory changes.</li>
+                    <li>Expected Outcome: Inventory levels accurately update on the dashboard.</li>
+                </ul>
+            </li>
+        </ul>
+        <p><strong>Overhead Software:</strong> Data stream driver for real-time analytics, mock data feeds for event activity.</p>
+    
+        <!-- Phase 6 -->
+        <h3>Phase 6: Post-event Reporting and Comprehensive Analytics</h3>
+        <p><strong>Purpose:</strong> This phase confirms that post-event reports provide complete data for organizers on ticket sales, attendee check-ins, and vendor performance to assess event success.</p>
+        <ul>
+            <li><strong>Comprehensive Sales Report:</strong>
+                <ul>
+                    <li>Action: Generate and review post-event report for total ticket sales and check-ins.</li>
+                    <li>Expected Outcome: Report contains accurate sales data based on event transactions.</li>
+                </ul>
+            </li>
+            <li><strong>Vendor Performance Report:</strong>
+                <ul>
+                    <li>Action: View vendor-specific report on sales and fulfillment times.</li>
+                    <li>Expected Outcome: Performance metrics for vendors are detailed and accurate.</li>
+                </ul>
+            </li>
+        </ul>
+        <p><strong>Overhead Software:</strong> Report generation driver, mock data for simulating event statistics.</p>
+
+
+    </section>
+    
+   
+    <section id="Validations">
+      <h2 class="section-title">Validation Tests</h2>
+  
+      <h3>Test Procedure</h3>
+      <p style="margin-bottom: 20px;">Validation testing will be scheduled post-development to ensure that the EventSphere system functions cohesively as an integrated product. These tests will verify the alignment of the system with its functional and non-functional requirements and check its readiness for deployment. The testing will focus on integration and end-to-end functionality, ensuring that the platform provides a seamless experience for organizers, attendees, and vendors. Additionally, non-functional criteria like performance, scalability, and security will be tested.</p>
+    
+  
+      <h4 style="margin-bottom: 20px;">Testing Methods:</h4>
+      <ul style="margin-bottom: 30px;">
+          <li>Functional Testing</li>
+          <li>Load Testing</li>
+          <li>Performance Testing</li>
+      </ul>
+  
+      <h3>Test Cases</h3>
+  
+      <h4 style="margin-bottom: 20px;">Functional Testing</h4>
+      <table style="margin-top: 20px; margin-bottom: 40px;">
+          <thead>
+              <tr>
+                  <th>Test Case #</th>
+                  <th>Test Case Description</th>
+                  <th>Expected Results</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                  <td>VT-1</td>
+                  <td>Event Creation: Organizers should be able to create and define event details, including date, time, location, ticket types, and capacity.</td>
+                  <td>Testers should successfully create events, and the details should be correctly stored in the system.</td>
+              </tr>
+              <tr>
+                  <td>VT-2</td>
+                  <td>Ticket Purchase: Attendees should be able to purchase tickets and receive a unique QR code upon successful payment.</td>
+                  <td>Testers should receive valid QR codes that reflect the purchased tickets and match the payment details.</td>
+              </tr>
+              <tr>
+                  <td>VT-3</td>
+                  <td>Merchandise and Concessions: Attendees can pre-order items linked to their QR codes.</td>
+                  <td>Testers should see orders reflected in their profiles, and QR codes should update accordingly.</td>
+              </tr>
+              <tr>
+                  <td>VT-4</td>
+                  <td>Vendor Fulfillment: Vendors should access attendee orders via QR code scans and update order statuses.</td>
+                  <td>Testers should fulfill orders accurately, and the system should reflect updated inventory and status in real time.</td>
+              </tr>
+              <tr>
+                  <td>VT-5</td>
+                  <td>Analytics Dashboard: Organizers should view real-time ticket sales, attendee check-ins, and merchandise sales.</td>
+                  <td>Testers should access dashboards with accurate and real-time data reflecting the event's operational metrics.</td>
+              </tr>
+              <tr>
+                  <td>VT-6</td>
+                  <td>Security: Users must enter valid credentials for access.</td>
+                  <td>Testers should not be able to log in or access resources without valid credentials.</td>
+              </tr>
+              <tr>
+                  <td>VT-7</td>
+                  <td>Push Notifications: Users should receive timely updates about events, purchases, and announcements.</td>
+                  <td>Testers should receive relevant notifications within the specified time.</td>
+              </tr>
+          </tbody>
+      </table>
+  
+      <h4 style="margin-bottom: 20px;">Performance Testing</h4>
+      <table style="margin-top: 20px; margin-bottom: 40px;">
+          <thead>
+              <tr>
+                  <th>Test Case #</th>
+                  <th>Test Case Description</th>
+                  <th>Expected Results</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                  <td>VT-8</td>
+                  <td>Response Times: Verify response times for ticket purchases, order processing, and check-ins.</td>
+                  <td>All responses should occur within 2 seconds.</td>
+              </tr>
+              <tr>
+                  <td>VT-9</td>
+                  <td>Scalability: Test system performance under expected user load during peak hours.</td>
+                  <td>The system should maintain consistent performance and not exhibit significant latency or downtime.</td>
+              </tr>
+          </tbody>
+      </table>
+  
+      <h4 style="margin-bottom: 20px;">Load Testing</h4>
+      <table style="margin-top: 20px; margin-bottom: 40px;">
+          <thead>
+              <tr>
+                  <th>Test Case #</th>
+                  <th>Test Case Description</th>
+                  <th>Expected Results</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                  <td>VT-10</td>
+                  <td>Stress Test: Simulate high-volume ticket sales and QR code check-ins.</td>
+                  <td>The system should process transactions and scans accurately without crashing or failing unexpectedly.</td>
+              </tr>
+              <tr>
+                  <td>VT-11</td>
+                  <td>System Recovery: Test the ability to recover from failures caused by extreme loads.</td>
+                  <td>The system should gracefully recover and maintain data integrity after failures.</td>
+              </tr>
+          </tbody>
+      </table>
+  
+      <h3>Traceability Matrix</h3>
+
+      <h4 style="margin-bottom: 20px;">Functional Requirements</h4>
+      <table style="margin-top: 20px; margin-bottom: 40px;">
+          <thead>
+              <tr>
+                  <th>Req#</th>
+                  <th>Requirement Description</th>
+                  <th>Test Case(s)</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                  <td>FR-1</td>
+                  <td>The system shall allow organizers to create and define event details, including date, time, location, ticket types, prices, and capacity.</td>
+                  <td>VTC-1, VTC-5</td>
+              </tr>
+              <tr>
+                  <td>FR-2</td>
+                  <td>Organizers can manage ticket sales in real-time and view details on the number of tickets sold and the remaining capacity.</td>
+                  <td>VTC-5, VTC-9</td>
+              </tr>
+              <tr>
+                  <td>FR-3</td>
+                  <td>Organizers can list merchandise and concessions for sale within the event.</td>
+                  <td>VTC-1, VTC-3</td>
+              </tr>
+              <tr>
+                  <td>FR-4</td>
+                  <td>Attendees can browse events by category, date, location, and popularity.</td>
+                  <td>VTC-8</td>
+              </tr>
+              <tr>
+                  <td>FR-5</td>
+                  <td>The system shall allow attendees to purchase tickets for events and provide a unique QR code upon successful payment.</td>
+                  <td>VTC-2, VTC-9</td>
+              </tr>
+              <tr>
+                  <td>FR-6</td>
+                  <td>Attendees can pre-order merchandise and concessions tied to their QR code for collection at the event.</td>
+                  <td>VTC-3, VTC-6</td>
+              </tr>
+              <tr>
+                  <td>FR-7</td>
+                  <td>Attendees can use their QR code to check in at the event and collect pre-ordered items.</td>
+                  <td>VTC-4, VTC-7</td>
+              </tr>
+              <tr>
+                  <td>FR-8</td>
+                  <td>Vendors can access and fulfill attendee orders by scanning QR codes.</td>
+                  <td>VTC-4</td>
+              </tr>
+              <tr>
+                  <td>FR-9</td>
+                  <td>Vendors can manage and update their inventory in real time, displaying current stock levels to organizers and attendees.</td>
+                  <td>VTC-5, VTC-9</td>
+              </tr>
+              <tr>
+                  <td>FR-10</td>
+                  <td>The system shall handle secure payments and process ticket, merchandise, and concession orders.</td>
+                  <td>VTC-2, VTC-6</td>
+              </tr>
+              <tr>
+                  <td>FR-11</td>
+                  <td>The system shall generate an updated QR code reflecting any new orders placed during the event.</td>
+                  <td>VTC-2, VTC-11</td>
+              </tr>
+              <tr>
+                  <td>FR-12</td>
+                  <td>Organizers can view analytics on ticket sales, attendee check-ins, merchandise sales, and vendor performance.</td>
+                  <td>VTC-5, VTC-10</td>
+              </tr>
+              <tr>
+                  <td>FR-13</td>
+                  <td>The system shall provide post-event data insights for organizers, accessible through an analytics dashboard.</td>
+                  <td>VTC-5, VTC-10</td>
+              </tr>
+          </tbody>
+      </table>
+      
+
+      <h4 style="margin-bottom: 20px;">Non-Functional Requirements</h4>
+      <table style="margin-top: 20px; margin-bottom: 40px;">
+          <thead>
+              <tr>
+                  <th>Req#</th>
+                  <th>Requirement Description</th>
+                  <th>Test Case(s)</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                  <td>NFR-1</td>
+                  <td>The system shall handle high volumes of traffic, especially during peak times around event sales and check-ins.</td>
+                  <td>VTC-9, VTC-10</td>
+              </tr>
+              <tr>
+                  <td>NFR-2</td>
+                  <td>Implement load balancing and auto-scaling for seamless performance across services.</td>
+                  <td>VTC-9</td>
+              </tr>
+              <tr>
+                  <td>NFR-3</td>
+                  <td>The system shall implement role-based access control for organizers, attendees, and vendors.</td>
+                  <td>VTC-6, VTC-4</td>
+              </tr>
+              <tr>
+                  <td>NFR-4</td>
+                  <td>Integrate secure payment gateways to process transactions.</td>
+                  <td>VTC-2, VTC-6</td>
+              </tr>
+              <tr>
+                  <td>NFR-5</td>
+                  <td>Encrypt sensitive data, including payment details and personal information, both in transit and at rest.</td>
+                  <td>VTC-6</td>
+              </tr>
+              <tr>
+                  <td>NFR-6</td>
+                  <td>Ensure 99.9% uptime, especially during high-traffic periods like event bookings and attendee check-ins.</td>
+                  <td>VTC-9, VTC-10</td>
+              </tr>
+              <tr>
+                  <td>NFR-7</td>
+                  <td>Provide mechanisms for system recovery in the case of failures to maintain consistent user experience.</td>
+                  <td>VTC-10, VTC-11</td>
+              </tr>
+              <tr>
+                  <td>NFR-8</td>
+                  <td>Ensure a responsive design that supports mobile and desktop devices for all users.</td>
+                  <td>VTC-11</td>
+              </tr>
+              <tr>
+                  <td>NFR-9</td>
+                  <td>Provide intuitive user interfaces for organizers, attendees, and vendors, tailored to their respective roles and functions.</td>
+                  <td>VTC-11</td>
+              </tr>
+          </tbody>
+      </table>
+      
+  </section>
+  
+  
+  
+
+
+  <section id="conclusion">
+    <h2 class="section-title">Conclusion</h2>
+    <p>
+        The comprehensive testing strategy for EventSphere has been meticulously designed to ensure the robustness, reliability, and performance of this complex event management and ticketing platform. By adopting a phased approach that progresses from the foundational Database layer through the Backend and finally to the Presentation layer, we have established a systematic method to validate each component of the system thoroughly.
+    </p>
+    <p>
+        Our testing plan encompasses a wide range of test cases, covering functional, non-functional, and integration aspects of the application. Key focus areas include:
+    </p>
+    <ul>
+        <li>Database integrity and performance under various load conditions</li>
+        <li>Backend API functionality, security, and scalability</li>
+        <li>User interface responsiveness and accessibility across different devices and browsers</li>
+        <li>Real-time inventory synchronization and multi-vendor order management</li>
+        <li>Analytics data aggregation and visualization accuracy</li>
+    </ul>
+    <p>
+        The phased integration approach allows us to isolate and address issues early in the development process, minimizing risks and ensuring stability before more complex modules are added. This strategy aligns well with EventSphere's microservices architecture, enabling independent testing of components while still ensuring seamless integration.
+    </p>
+    <p>
+        By rigorously testing each layer and their interactions, we aim to deliver a high-quality product that meets all specified functional and non-functional requirements. The final phase of full system integration will simulate real-world scenarios, ensuring that EventSphere can handle peak traffic, maintain data consistency, and provide a smooth user experience for organizers, attendees, and vendors alike.
+    </p>
+    <p>
+       This comprehensive test plan will serve as a crucial guide, helping us to maintain high standards of quality and reliability throughout the development process. The successful execution of this test plan will result in a robust, scalable, and user-friendly event management platform that meets the diverse needs of its stakeholders.
+    </p>
+</section>
+
+</div>
+
+
+</body>
+</html>
+<footer style="background-color: var(--secondary-color); color: var(--white); text-align: center; padding: 20px; margin-top: 30px; border-radius: 10px;">
+    <p><strong>EventSphere Project Team Members:</strong></p>
+    <p>Sahil Sharma, Shail Shah, Ritwik Sood, Uma Sruthy Gajula, Udbhaav Mudgil</p>
+    <p>© 2024 EventSphere </p>
+</footer>
